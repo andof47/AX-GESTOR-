@@ -1,5 +1,5 @@
 {
-  "name": "Copy of AXÉ GESTOR 3.1",
+  "name": " AXÉ GESTOR 3",
   "description": "A comprehensive management system for religious communities, designed as a client-side Single-Page Application using React and localStorage for data persistence. It features role-based access control and modules for managing users, inventory, finances, rituals, and more.",
   "requestFramePermissions": []
 }
