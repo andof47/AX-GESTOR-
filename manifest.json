@@ -1,0 +1,23 @@
+{
+  "short_name": "Axé Gestor",
+  "name": "AXÉ GESTOR 3",
+  "description": "Sistema de gerenciamento para comunidades religiosas.",
+  "icons": [
+    {
+      "src": "/app-icon.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/app-icon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#6d28d9",
+  "background_color": "#1e293b"
+}
