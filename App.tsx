@@ -6,10 +6,10 @@ import { Role, User, InventoryItem, Transaction, Ritual, Entity, CalendarEvent, 
 import { pages } from './constants';
 import { ThemeProvider, useTheme } from './contexts';
 
-// FIX: Corrected JSX namespace augmentation for custom elements. The previous implementation
-// was overwriting React's native IntrinsicElements, causing errors with standard HTML tags.
-// This version correctly uses declaration merging to augment the existing types.
-declare global {
+// FIX: Corrected JSX namespace augmentation for custom elements.
+// The previous 'declare global' implementation was overwriting React's native IntrinsicElements.
+// This version uses `declare module 'react'` to correctly merge with existing types.
+declare module 'react' {
     namespace JSX {
         interface IntrinsicElements {
             'ion-icon': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & { name: string; }, HTMLElement>;
@@ -1544,9 +1544,9 @@ const Calendar = () => {
     };
     
     const urgencyColors: { [key: string]: string } = {
-        high: 'bg-red-500/30',
-        medium: 'bg-yellow-500/30',
-        low: 'bg-green-500/30',
+        high: 'bg-red-500 text-white',
+        medium: 'bg-yellow-400 text-black',
+        low: 'bg-green-500 text-white',
         none: '',
     };
     
@@ -1629,13 +1629,22 @@ const Calendar = () => {
                         const dayEvents = getEventsForDay(date);
                         
                         const dayNote = dayNotesMap.get(date.toISOString().split('T')[0]);
-                        const dayColorClass = dayNote ? urgencyColors[dayNote.urgency] : '';
+                        const dayColorClass = dayNote && dayNote.urgency !== 'none' ? urgencyColors[dayNote.urgency] : '';
                         const hasNotes = dayNote && dayNote.notes;
+
+                        let conditionalClasses = '';
+                        if (dayColorClass) {
+                            conditionalClasses = dayColorClass;
+                        } else {
+                            conditionalClasses = isCurrentMonth
+                                ? 'bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700/50'
+                                : 'bg-gray-50 dark:bg-slate-800/50 text-gray-400 dark:text-slate-500 hover:bg-gray-100 dark:hover:bg-slate-700';
+                        }
 
                         return (
                             <div 
                                 key={index} 
-                                className={`relative border border-gray-200 dark:border-slate-700 h-28 md:h-36 flex flex-col p-2 transition-colors duration-200 cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-700/50 ${isCurrentMonth ? 'bg-white dark:bg-slate-800' : 'bg-gray-50 dark:bg-slate-800/50 text-gray-400 dark:text-slate-500'} ${dayColorClass}`}
+                                className={`relative border border-gray-200 dark:border-slate-700 h-28 md:h-36 flex flex-col p-2 transition-colors duration-200 cursor-pointer ${conditionalClasses}`}
                                 onClick={() => handleDayClick(date)}
                             >
                                 <div className="flex justify-between items-center">

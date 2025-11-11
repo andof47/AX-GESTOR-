@@ -104,10 +104,11 @@ export const DataProvider: React.FC<{children: React.ReactNode}> = ({ children }
     const [giraNotes, setGiraNotes] = useLocalStorage<GiraNote[]>('voxmind_giraNotes', []);
 
     const addUser = (userData: Omit<User, 'id' | 'passwordHash'> & { password: string }) => {
+        const { password, ...rest } = userData;
         const newUser: User = {
-            ...userData,
-            id: new Date().toISOString(),
-            passwordHash: simpleHash(userData.password),
+            ...rest,
+            id: crypto.randomUUID(),
+            passwordHash: simpleHash(password),
         };
         setUsers(prev => [...prev, newUser]);
     };
@@ -123,7 +124,7 @@ export const DataProvider: React.FC<{children: React.ReactNode}> = ({ children }
     const addInventoryItem = (itemData: Omit<InventoryItem, 'id'>) => {
         const newItem: InventoryItem = {
             ...itemData,
-            id: new Date().toISOString(),
+            id: crypto.randomUUID(),
         };
         setInventory(prev => [...prev, newItem]);
     };
@@ -139,7 +140,7 @@ export const DataProvider: React.FC<{children: React.ReactNode}> = ({ children }
     const addTransaction = (transactionData: Omit<Transaction, 'id'>) => {
         const newTransaction: Transaction = {
             ...transactionData,
-            id: new Date().toISOString(),
+            id: crypto.randomUUID(),
         };
         setTransactions(prev => [...prev, newTransaction]);
     };
@@ -155,7 +156,7 @@ export const DataProvider: React.FC<{children: React.ReactNode}> = ({ children }
     const addRitual = (ritualData: Omit<Ritual, 'id'>) => {
         const newRitual: Ritual = {
             ...ritualData,
-            id: new Date().toISOString(),
+            id: crypto.randomUUID(),
         };
         setRituals(prev => [...prev, newRitual]);
     };
@@ -169,7 +170,7 @@ export const DataProvider: React.FC<{children: React.ReactNode}> = ({ children }
     };
 
     const addEntity = (entityData: Omit<Entity, 'id'>) => {
-        const newEntity: Entity = { ...entityData, id: new Date().toISOString() };
+        const newEntity: Entity = { ...entityData, id: crypto.randomUUID() };
         setEntities(prev => [...prev, newEntity]);
     };
     const updateEntity = (updatedEntity: Entity) => {
@@ -180,7 +181,7 @@ export const DataProvider: React.FC<{children: React.ReactNode}> = ({ children }
     };
     
     const addPonto = (pontoData: Omit<Ponto, 'id'>) => {
-        const newPonto: Ponto = { ...pontoData, id: new Date().toISOString() };
+        const newPonto: Ponto = { ...pontoData, id: crypto.randomUUID() };
         setPontos(prev => [...prev, newPonto]);
     };
     const updatePonto = (updatedPonto: Ponto) => {
@@ -191,7 +192,7 @@ export const DataProvider: React.FC<{children: React.ReactNode}> = ({ children }
     };
 
     const addGiraNote = (noteData: Omit<GiraNote, 'id'>) => {
-        const newNote: GiraNote = { ...noteData, id: new Date().toISOString() };
+        const newNote: GiraNote = { ...noteData, id: crypto.randomUUID() };
         setGiraNotes(prev => [...prev, newNote]);
     };
     const updateGiraNote = (updatedNote: GiraNote) => {
@@ -202,7 +203,7 @@ export const DataProvider: React.FC<{children: React.ReactNode}> = ({ children }
     };
 
     const addCalendarEvent = (eventData: Omit<CalendarEvent, 'id'>) => {
-        const newEvent: CalendarEvent = { ...eventData, id: new Date().toISOString() };
+        const newEvent: CalendarEvent = { ...eventData, id: crypto.randomUUID() };
         setCalendarEvents(prev => [...prev, newEvent]);
     };
     const updateCalendarEvent = (updatedEvent: CalendarEvent) => {
